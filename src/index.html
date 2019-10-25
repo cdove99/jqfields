@@ -16,23 +16,71 @@
 
         <script type="text/javascript">
             $(function() {
+                // Textbox
+                $('#mytextbox').jfield('text', {
+                    attrs: {name: "text", id: "_text"},
+                    preset: "Sample Text",
+                    label: 'A Text Box',
+                });
+                // Number
+                $('#mynumber').jfield('number', {
+                    attrs: {name: "number", id: "_number"},
+                    preset: 10,
+                    label: 'A Number',
+                });
+                // Checkbox
+                $('#mycheckbox').jfield('checkbox', {
+                    value: '1',
+                    attrs: {name: "check", id: "_check"},
+                    preset: true,
+                    label: 'A Checkbox',
+                });
+                // Radio
+                // Button
+                $('#mybutton').jfield('button', {
+                    value: 'Button',
+                    attrs: {name: "button", id: "_button"},
+                    label: 'This is a button',
+                });
+                // Getting values
+                // Setting values
 
+
+                // Listener - listening to all jfield
+                $(".jfield").on("field-updated", function(evt) {
+                    console.log("Updated a field", evt);
+                });
             });
         </script>
     </head>
 
     <body>
         <form>
-
+            <h1>JQuery field plugin.</h1>
+            
+            <p>Textbox</p>
             <div>
-                <div class="checkbox">
-                    <input type="checkbox" value="test"/>
-                    <span>X</span>
-                </div>
+                <div id="mytextbox"></div>
             </div>
 
+            <p>Number</p>
             <div>
-                
+                <div id="mynumber"></div>
+            </div>
+
+            <p>Checkbox</p>
+            <div>
+                <div id="mycheckbox"></div>
+            </div>
+
+            <p>Radio</p>
+            <div>
+                <div id="myradio"></div>
+            </div>
+
+            <p>Button</p>
+            <div>
+                <div id="mybutton"></div>
             </div>
 
         </form>
