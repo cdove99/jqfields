@@ -3,15 +3,14 @@
     <head>
         <title>jfield jQuery Plugin</title>
 
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css" integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
         <!-- Basic styling -->
-        <link rel="stylesheet" href="./css/jquery-ui.min.css" type="text/css"/>
-        <link rel="stylesheet" href="./css/jquery-ui.structure.min.css" type="text/css"/>
-        <link rel="stylesheet" href="./css/jquery-ui.theme.min.css" type="text/css"/>
         <link rel="stylesheet" href="./css/styles.css" type="text/css"/>
         <link rel="stylesheet" href="./css/jfield.css" type="text/css"/>
         <!-- Scripts -->
         <script src="./js/jquery-3.4.1.min.js"></script>
-        <script src="./js/jquery-ui.min.js"></script>
         <script src="./js/jfield.js"></script>
 
         <script type="text/javascript">
@@ -36,6 +35,19 @@
                     label: 'A Checkbox',
                 });
                 // Radio
+                $('#myradio .myradio').jfield('radio', {
+                    value: '1',
+                    attrs: {name: "radio", id: "_radio"},
+                    preset: true,
+                    label: 'Radio Option',
+                });
+                // Dropdown
+                $('#mydrop').jfield('dropdown', {
+                    value: ['1','2','3','4'],
+                    attrs: {name: "dropdown", id: "_dropdown"},
+                    preset: '1',
+                    label: 'A Dropdown',
+                });
                 // Button
                 $('#mybutton').jfield('button', {
                     value: 'Button',
@@ -75,7 +87,15 @@
 
             <p>Radio</p>
             <div>
-                <div id="myradio"></div>
+                <div id="myradio">
+                    <div class="myradio"></div>
+                    <div class="myradio"></div>
+                </div>
+            </div>
+
+            <p>Dropdown</p>
+            <div>
+                <div id="mydrop"></div>
             </div>
 
             <p>Button</p>

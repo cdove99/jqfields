@@ -1,33 +1,32 @@
-/* --Structure-- */
+/* -- Basic Structure -- */
 /* Container */
 .jfield, .text, .number, .radio, .checkbox, .dropdown, .button { position: relative; }
-.text, .number, .radio, .checkbox, .dropdown, .button { margin-right: 5px; }
-.jfield label { pointer-events: none; }
+.text, .number, .radio span, .checkbox span, .dropdown, .button { margin-right: 5px; }
+.jfield span:before { font-family: "Font Awesome 5 Free"; }
 /* Text */
 .text { padding: 2px 5px; width: 100px; }
 /* Number */
 .number { padding: 2px 5px; width: 30px; }
 /* Radio */
-.radio {}
+.radio { cursor: pointer; }
+.radio input { opacity: 0; height: 1px; width: 1px; margin: -1px; overflow: hidden; }
+.radio input ~ span:before { content: "\f00c"; font-size: 80%; padding: 2px; width: 10px; }
 /* Checkbox */
-.checkbox { cursor: pointer; display: inline-block; height: 20px; width: 20px; }
+.checkbox { cursor: pointer; }
 .checkbox input { opacity: 0; height: 1px; width: 1px; margin: -1px; overflow: hidden; }
-.checkbox span { 
-    height: 100%; position: absolute; width: 100%; 
-    text-align: center; top: 0; left: 0; right: 0; bottom: 0;
-}
+.checkbox input ~ span:before { content: "\f00c"; font-size: 80%; padding: 2px; width: 10px; }
 /* Dropdown */
-.dropdown {}
+.dropdown { padding: 2px 5px; width: 100px; }
+.dropdown-menu ul { list-style: none; padding: 3px; margin: 0; }
 /* Button */
-.button {}
+.button { cursor: pointer; }
 
 
-/* --Theme-- */
-.text, .number, .radio, .checkbox, .dropdown, .button {
+/* -- Theme -- */
+.text, .number, .radio span:before, .checkbox span:before, .dropdown, .dropdown-menu, .button {
     background: #FFFFFF;
     border: 1px solid #000000;
 }
-.checkbox.active { background: #000; }
-.checkbox span {
-    color: #FFFFFF;
-}
+.radio span:before { border-radius: 50%; }
+.checkbox input ~ span:before, .radio input ~ span:before { color: #FFFFFF; }
+.checkbox input:checked ~ span:before, .radio input:checked ~ span:before { color: #000000; }
