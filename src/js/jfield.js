@@ -17,8 +17,6 @@
  * `action == 'getValue'`
  *  Get a value from one or more jfield elements in the parent.
  *  Returned as array of objects.
- *  `options` can be a string name, or array of string names to filter which
- *  fields are retrieved. No option is all fields.
  * 
  * `action == 'setValue'`
  *  Set a value for one or more jfield elements in the parent.
@@ -73,7 +71,6 @@ var jFieldDefaults = {
 };
 
 (function($) {
-
     // function holder
     var fn = {
         // Base container
@@ -130,35 +127,46 @@ var jFieldDefaults = {
         openDrop: function($input, values) {
             if (!Array.isArray(values)) return;
 
-            var $menu = $("<div></div>");
-            $menu.attr(jFieldDefaults.dropdown.menu.attr)
-                .css({
-                    'position': 'absolute', 
-                    'top': $input.outerHeight() + 2,
-                    'width': $input.innerWidth(),
-                    'z-index': 100,
-                }).append("<ul></ul>");
-            
-            // Add values
-            for (var i=0; i<values.length; i++) {
-                var value = String(values[i]);
-                $menu.find("ul").append("<li>" + value + "</li>");
+            var cls = jFieldDefaults.dropdown.menu.attr.class;
+            var hasmenu = ($input.parent().find('.'+cls).length > 0);
+
+            if (hasmenu)
+                $menu = $input.parent().find('.'+cls);
+            else
+                $menu = $("<div></div>");
+
+            if (!hasmenu) {
+                $menu.attr(jFieldDefaults.dropdown.menu.attr)
+                    .css({
+                        'position': 'absolute', 
+                        'top': $input.outerHeight() + 2,
+                        'width': $input.innerWidth(),
+                        'z-index': 100,
+                    }).append("<ul></ul>");
+
+                // Add values
+                for (var i=0; i<values.length; i++) {
+                    var value = String(values[i]);
+                    $menu.find("ul").append("<li>" + value + "</li>");
+                }
+
+                // events
+                $menu.find("li").on("click", function() {
+                    var value = $(this).text();
+                    $input.val(value);
+                    $input.trigger("change");
+                });
+
+                $input.parent().append($menu);
+            } else {
+                $menu.show();
             }
-
-            // events
-            $menu.find("li").on("click", function() {
-                var value = $(this).text();
-                $input.val(value);
-                $input.trigger("change");
-            });
-
-            $input.parent().append($menu);
 
             // body once to close
             var bodyClick = function(evt) {
                 var cls = jFieldDefaults.dropdown.attr.class;
                 if (!$(evt.target).hasClass(cls))
-                    $menu.remove();
+                    $menu.hide();
             };
             $("body").off("click", bodyClick);
             $("body").on("click", bodyClick);
@@ -249,7 +257,7 @@ var jFieldDefaults = {
             // Add to element
             $parent.append($field);
         },
-        radio: function($parent, options) {  // WIP
+        radio: function($parent, options) {
             var $field = fn.createRadio();
             // Set our value for this check
             $field.find("input").val(options.value);
@@ -276,7 +284,7 @@ var jFieldDefaults = {
             // Add to element
             $parent.append($field);
         },
-        dropdown: function($parent, options) {  // WIP
+        dropdown: function($parent, options) {  // TODO: Tweak position
             var $field = fn.createDropdown();
             // custom attr
             setattr($field.find("input"), options.attrs);
@@ -336,7 +344,6 @@ var jFieldDefaults = {
             $parent.append($field);
         },
     };
-
     // attr
     function setattr($el, attrs) {
         /**
@@ -350,42 +357,83 @@ var jFieldDefaults = {
 
         $el.attr(attrs);
     };
-
     // set / get
-    function setValue(value) {};
-    function getValue(fields) {};
-
-
-    // plugin
-    $.fn.jfield = function(action, options) {
-        return this.each(function(i, el) {
-            switch (action) {
-                case "text":  // Create text field
-                    setup.text($(this), options);
-                    break;
-                case "number":  // Create number field
-                    setup.number($(this), options);
-                    break;
-                case "checkbox":  // Create checkbox field
-                    setup.checkbox($(this), options);
-                    break;
-                case "radio":  // Create radio field
-                    setup.radio($(this), options);
-                    break;
-                case "dropdown":  // Create dropdown/select field
-                    setup.dropdown($(this), options);
-                    break;
-                case "button":  // Create button
-                    setup.button($(this), options);
-                    break;
-                case "setValue":  // Set a value
-                    break;
-                case "getValue":  // Get the value (json style)
-                    break;
-                default: 
-                    console.warn("Unrecognised action: " + action);
+    function setValue($elem, value) {
+        // Setting values
+        $elem.find(".jfield").each(function() {
+            var ftype = $(this).find("input").attr("type");
+            
+            if (ftype === "checkbox" || ftype === "radio") {
+                // Set on radio/check means select it.
+                var checked = $(this).find("input").is(":checked");
+                if ((!!value && !checked) || (!value && checked))
+                    $(this).find("input").trigger("click");
+            } else if (ftype === "text" || ftype === "number") {
+                // Set on text/number means insert value. (Dropdown gets hard set)
+                if (ftype === "number" && isNaN(Number(value))) return;
+                $(this).find("input").val(value);
+            } else if (ftype === "button") {
+                // Set on button triggers a click.
+                $(this).find("input").trigger("click");
             }
         });
     };
+    function getValue($elem) {
+        /**
+         * Return an object of values for all the
+         * jfields in the selector.
+         */
+        var j = {};
+        $elem.find(".jfield").each(function(i, el) {
+            var $input = $(this).find("input");
+            var inputtype = $input.attr("type");
+            var inputname = $input.attr("name");
 
+            if (inputtype == "button") {
+                return;
+            } else if (inputtype == "radio" || inputtype == "checkbox") {
+                if ($input.is(":checked")) {
+                    j[inputname] = $input.val();
+                }
+            } else {
+                j[inputname] = $input.val();
+            }
+        });
+        return j;
+    };
+    // plugin
+    $.fn.jfield = function(action, options) {
+        switch (action) {
+            case "setValue":  // Set a value  - WIP
+                setValue($(this), options);
+                break;
+            case "getValue":  // Get the value (json style)
+                return getValue($(this));
+            default:
+                return this.each(function(i, el) {
+                    switch (action) {
+                        case "text":  // Create text field
+                            setup.text($(this), options);
+                            break;
+                        case "number":  // Create number field
+                            setup.number($(this), options);
+                            break;
+                        case "checkbox":  // Create checkbox field
+                            setup.checkbox($(this), options);
+                            break;
+                        case "radio":  // Create radio field
+                            setup.radio($(this), options);
+                            break;
+                        case "dropdown":  // Create dropdown/select field
+                            setup.dropdown($(this), options);
+                            break;
+                        case "button":  // Create button
+                            setup.button($(this), options);
+                            break;
+                        default: 
+                            console.warn("Unrecognised action: " + action);
+                    }
+                });
+        }
+    };
 })(jQuery);

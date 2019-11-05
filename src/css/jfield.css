@@ -1,12 +1,13 @@
 /* -- Basic Structure -- */
 /* Container */
+.jfield { padding: 5px; }
 .jfield, .text, .number, .radio, .checkbox, .dropdown, .button { position: relative; }
 .text, .number, .radio span, .checkbox span, .dropdown, .button { margin-right: 5px; }
 .jfield span:before { font-family: "Font Awesome 5 Free"; }
 /* Text */
 .text { padding: 2px 5px; width: 100px; }
 /* Number */
-.number { padding: 2px 5px; width: 30px; }
+.number { padding: 2px 5px; width: 50px; }
 /* Radio */
 .radio { cursor: pointer; }
 .radio input { opacity: 0; height: 1px; width: 1px; margin: -1px; overflow: hidden; }
@@ -20,13 +21,3 @@
 .dropdown-menu ul { list-style: none; padding: 3px; margin: 0; }
 /* Button */
 .button { cursor: pointer; }
-
-
-/* -- Theme -- */
-.text, .number, .radio span:before, .checkbox span:before, .dropdown, .dropdown-menu, .button {
-    background: #FFFFFF;
-    border: 1px solid #000000;
-}
-.radio span:before { border-radius: 50%; }
-.checkbox input ~ span:before, .radio input ~ span:before { color: #FFFFFF; }
-.checkbox input:checked ~ span:before, .radio input:checked ~ span:before { color: #000000; }

@@ -15,52 +15,60 @@
 
         <script type="text/javascript">
             $(function() {
+                $('form').on("submit", function() {
+                    return false;
+                });
                 // Textbox
                 $('#mytextbox').jfield('text', {
-                    attrs: {name: "text", id: "_text"},
+                    attrs: {name: "thetextbox", id: "_text"},
                     preset: "Sample Text",
                     label: 'A Text Box',
                 });
                 // Number
                 $('#mynumber').jfield('number', {
-                    attrs: {name: "number", id: "_number"},
+                    attrs: {name: "mynumber", id: "_number"},
                     preset: 10,
                     label: 'A Number',
                 });
                 // Checkbox
                 $('#mycheckbox').jfield('checkbox', {
                     value: '1',
-                    attrs: {name: "check", id: "_check"},
+                    attrs: {name: "checkableitem", id: "_check"},
                     preset: true,
                     label: 'A Checkbox',
                 });
                 // Radio
                 $('#myradio .myradio').jfield('radio', {
                     value: '1',
-                    attrs: {name: "radio", id: "_radio"},
+                    attrs: {name: "whichoption", id: "_radio"},
                     preset: true,
                     label: 'Radio Option',
                 });
                 // Dropdown
                 $('#mydrop').jfield('dropdown', {
                     value: ['1','2','3','4'],
-                    attrs: {name: "dropdown", id: "_dropdown"},
+                    attrs: {name: "selectionbox", id: "_dropdown"},
                     preset: '1',
                     label: 'A Dropdown',
                 });
                 // Button
                 $('#mybutton').jfield('button', {
                     value: 'Button',
-                    attrs: {name: "button", id: "_button"},
+                    attrs: {name: "thisisabutton", id: "_button"},
                     label: 'This is a button',
                 });
-                // Getting values
-                // Setting values
-
-
+                
                 // Listener - listening to all jfield
                 $(".jfield").on("field-updated", function(evt) {
-                    console.log("Updated a field", evt);
+                    // Getting values
+                    var x = $('form').jfield("getValue");
+                    console.log("Updated a field:", x);
+                });
+
+                // Setting values
+                $('#setthisfield').on("click", function() {
+                    $('#mytextbox').jfield("setValue", "22 Apples");
+                    $('#mynumber').jfield("setValue", 123);
                 });
             });
         </script>
@@ -103,6 +111,9 @@
                 <div id="mybutton"></div>
             </div>
 
+            <div>
+                <button id="setthisfield">Set Text and Number</button>
+            </div>
         </form>
     </body>
 </html>
