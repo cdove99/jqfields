@@ -404,7 +404,7 @@ var jFieldDefaults = {
     // plugin
     $.fn.jfield = function(action, options) {
         switch (action) {
-            case "setValue":  // Set a value  - WIP
+            case "setValue":  // Set a value
                 setValue($(this), options);
                 break;
             case "getValue":  // Get the value (json style)
