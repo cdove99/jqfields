@@ -11,6 +11,7 @@
 /* Radio */
 .radio { cursor: pointer; }
 .radio input { opacity: 0; height: 1px; width: 1px; margin: -1px; overflow: hidden; }
+.radio span:before { border-radius: 50%; }
 .radio input ~ span:before { content: "\f00c"; font-size: 80%; padding: 2px; width: 10px; }
 /* Checkbox */
 .checkbox { cursor: pointer; }
@@ -21,3 +22,7 @@
 .dropdown-menu ul { list-style: none; padding: 3px; margin: 0; }
 /* Button */
 .button { cursor: pointer; }
+
+/* Default states */
+.checkbox input ~ span:before, .radio input ~ span:before { color: #FFFFFF; }
+.checkbox input:checked ~ span:before, .radio input:checked ~ span:before { color: #000000; }

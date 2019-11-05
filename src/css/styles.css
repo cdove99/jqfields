@@ -3,6 +3,3 @@
     background: #FFFFFF;
     border: 1px solid #000000;
 }
-.radio span:before { border-radius: 50%; }
-.checkbox input ~ span:before, .radio input ~ span:before { color: #FFFFFF; }
-.checkbox input:checked ~ span:before, .radio input:checked ~ span:before { color: #000000; }
