@@ -378,7 +378,7 @@ var jFieldDefaults = {
             }
         });
     };
-    function getValue($elem) {
+    function getValue($elem, getButtons) {
         /**
          * Return an object of values for all the
          * jfields in the selector.
@@ -390,11 +390,17 @@ var jFieldDefaults = {
             var inputname = $input.attr("name");
 
             if (inputtype == "button") {
-                return;
-            } else if (inputtype == "radio" || inputtype == "checkbox") {  // TODO: separate checkbox and radio, multiple checkboxes ARE allowed after all!
+                // Buttons are requested
+                if (!!getButtons) j[inputname] = $input.val();
+            } else if (inputtype == "radio") {  
                 if ($input.is(":checked")) {
                     j[inputname] = $input.val();
                 }
+            } else if (inputtype == "checkbox") {
+                if (!Array.isArray(j[inputname])) 
+                    j[inputname] = [];
+                if ($input.is(":checked"))
+                    j[inputname].push($input.val());
             } else {
                 j[inputname] = $input.val();
             }
@@ -408,7 +414,7 @@ var jFieldDefaults = {
                 setValue($(this), options);
                 break;
             case "getValue":  // Get the value (json style)
-                return getValue($(this));
+                return getValue($(this), options);
             default:
                 return this.each(function(i, el) {
                     switch (action) {

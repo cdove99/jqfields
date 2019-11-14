@@ -31,9 +31,9 @@
                     label: 'A Number',
                 });
                 // Checkbox
-                $('#mycheckbox').jfield('checkbox', {
+                $('#mycheckbox').find(".checker").jfield('checkbox', {
                     value: '1',
-                    attrs: {name: "checkableitem", id: "_check"},
+                    attrs: {name: "checkableitem"},
                     preset: true,
                     label: 'A Checkbox',
                 });
@@ -90,7 +90,11 @@
 
             <p>Checkbox</p>
             <div>
-                <div id="mycheckbox"></div>
+                <div id="mycheckbox">
+					<div class="checker"></div>
+					<div class="checker"></div>
+					<div class="checker"></div>
+				</div>
             </div>
 
             <p>Radio</p>
