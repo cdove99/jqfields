@@ -391,7 +391,7 @@ var jFieldDefaults = {
 
             if (inputtype == "button") {
                 return;
-            } else if (inputtype == "radio" || inputtype == "checkbox") {
+            } else if (inputtype == "radio" || inputtype == "checkbox") {  // TODO: separate checkbox and radio, multiple checkboxes ARE allowed after all!
                 if ($input.is(":checked")) {
                     j[inputname] = $input.val();
                 }
