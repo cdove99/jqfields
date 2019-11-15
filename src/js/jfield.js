@@ -28,13 +28,13 @@
 var jFieldDefaults = {
     text: {
         attr: {
-            class: 'text',
+            class: 'jtext',
             placeholder: '',
         },
     },
     number: {
         attr: {
-            class: 'number',
+            class: 'jnumber',
             min: -1000,
             max: 1000,
             step: 1,
@@ -42,12 +42,12 @@ var jFieldDefaults = {
     },
     checkbox: {
         attr: {
-            class: 'checkbox',
+            class: 'jcheckbox',
         },
     },
     radio: {
         attr: {
-            class: 'radio',
+            class: 'jradio',
             checked: false,
         },
         content: '',
@@ -55,17 +55,17 @@ var jFieldDefaults = {
     dropdown: {
         initial: '',
         attr: {
-            class: 'dropdown',
+            class: 'jdropdown',
         },
         menu: {
             attr: {
-                class: 'dropdown-menu',
+                class: 'jdropdown-menu',
             }
         }
     },
     button: {
         attr: {
-            class: 'button',
+            class: 'jbutton',
         },
     },
 };

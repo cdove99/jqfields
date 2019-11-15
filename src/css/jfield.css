@@ -1,28 +1,28 @@
 /* -- Basic Structure -- */
 /* Container */
 .jfield { padding: 5px; }
-.jfield, .text, .number, .radio, .checkbox, .dropdown, .button { position: relative; }
-.text, .number, .radio span, .checkbox span, .dropdown, .button { margin-right: 5px; }
+.jfield, .jtext, .jnumber, .jradio, .jcheckbox, .jdropdown, .jbutton { position: relative; }
+.jtext, .jnumber, .jradio span, .jcheckbox span, .jdropdown, .jbutton { margin-right: 5px; }
 .jfield span:before { font-family: "Font Awesome 5 Free"; }
 /* Text */
-.text { padding: 2px 5px; width: 100px; }
+.jtext { padding: 2px 5px; width: 100px; }
 /* Number */
-.number { padding: 2px 5px; width: 50px; }
+.jnumber { padding: 2px 5px; width: 50px; }
 /* Radio */
-.radio { cursor: pointer; }
-.radio input { opacity: 0; height: 1px; width: 1px; margin: -1px; overflow: hidden; }
-.radio span:before { border-radius: 50%; }
-.radio input ~ span:before { content: "\f00c"; font-size: 80%; padding: 2px; width: 10px; }
+.jradio { cursor: pointer; }
+.jradio input { opacity: 0; height: 1px; width: 1px; margin: -1px; overflow: hidden; }
+.jradio span:before { border-radius: 50%; }
+.jradio input ~ span:before { content: "\f00c"; font-size: 80%; padding: 2px; width: 10px; }
 /* Checkbox */
-.checkbox { cursor: pointer; }
-.checkbox input { opacity: 0; height: 1px; width: 1px; margin: -1px; overflow: hidden; }
-.checkbox input ~ span:before { content: "\f00c"; font-size: 80%; padding: 2px; width: 10px; }
+.jcheckbox { cursor: pointer; }
+.jcheckbox input { opacity: 0; height: 1px; width: 1px; margin: -1px; overflow: hidden; }
+.jcheckbox input ~ span:before { content: "\f00c"; font-size: 80%; padding: 2px; width: 10px; }
 /* Dropdown */
-.dropdown { padding: 2px 5px; width: 100px; }
-.dropdown-menu ul { list-style: none; padding: 3px; margin: 0; }
+.jdropdown { padding: 2px 5px; width: 100px; }
+.jdropdown-menu ul { list-style: none; padding: 3px; margin: 0; }
 /* Button */
-.button { cursor: pointer; }
+.jbutton { cursor: pointer; }
 
 /* Default states */
-.checkbox input ~ span:before, .radio input ~ span:before { color: #FFFFFF; }
-.checkbox input:checked ~ span:before, .radio input:checked ~ span:before { color: #000000; }
+.jcheckbox input ~ span:before, .jradio input ~ span:before { color: #FFFFFF; }
+.jcheckbox input:checked ~ span:before, .jradio input:checked ~ span:before { color: #000000; }
