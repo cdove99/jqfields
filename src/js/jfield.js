@@ -231,58 +231,100 @@ var jFieldDefaults = {
             $parent.append($field);
         },
         checkbox: function($parent, options) {
-            var $field = fn.createCheckbox();
-            // Set our value for this check
-            $field.find("input").val(options.value);
-    
-            // custom attr
-            setattr($field.find('input'), options.attrs);
-            // label
-            if (options.label) {
-                $field.find("label").append(String(options.label));
+            var values = options.value;
+            var labels = options.label;
+
+            if (Array.isArray(values)) {
+                for (var i=0; i<values.length; i++) {
+                    if (Array.isArray(labels)) {
+                        builder(values[i], labels[i]);
+                    } else {
+                        builder(values[i], labels);
+                    }
+                }
             } else {
-                $field.find("label").append(String(options.value));
+                builder(values, labels);
             }
 
-            // preset value
-            if (options.preset) {
-                $field.find('input').prop('checked', true);
+            function builder(val, lbl) {
+                var $field = fn.createCheckbox();
+                // Set our value for this check
+                $field.find("input").val(val);
+        
+                // custom attr
+                setattr($field.find('input'), options.attrs);
+                // label
+                if (lbl) {
+                    $field.find("label").append(String(lbl));
+                } else {
+                    $field.find("label").append(String(val));
+                }
+    
+                // preset value
+                if (options.preset) {
+                    if (typeof options.preset == "number" && options.preset == i) {
+                        $field.find('input').prop('checked', true);
+                    } else if (options.preset === true) {
+                        $field.find('input').prop('checked', true);
+                    }
+                }
+        
+                // events
+                $field.find("input").on("change", function() {
+                    $field.trigger("field-updated");
+                });
+        
+                // Add to element
+                $parent.append($field);
             }
-    
-            // events
-            $field.find("input").on("change", function() {
-                $field.trigger("field-updated");
-            });
-    
-            // Add to element
-            $parent.append($field);
         },
         radio: function($parent, options) {
-            var $field = fn.createRadio();
-            // Set our value for this check
-            $field.find("input").val(options.value);
-    
-            // custom attr
-            setattr($field.find('input'), options.attrs);
-            // label
-            if (options.label) {
-                $field.find("label").append(String(options.label));
+            var values = options.value;
+            var labels = options.label;
+
+            if (Array.isArray(values)) {
+                for (var i=0; i<values.length; i++) {
+                    if (Array.isArray(labels)) {
+                        builder(values[i], labels[i], i);
+                    } else {
+                        builder(values[i], labels, i);
+                    }
+                }
             } else {
-                $field.find("label").append(String(options.value));
+                builder(values, labels, 0);
             }
 
-            // preset value
-            if (options.preset) {
-                $field.find('input').prop('checked', true);
+            function builder(val, lbl, i) {
+                var $field = fn.createRadio();
+                // Set our value for this check
+                $field.find("input").val(val);
+        
+                // custom attr
+                setattr($field.find('input'), options.attrs);
+                // label
+                if (lbl) {
+                    $field.find("label").append(String(lbl));
+                } else {
+                    $field.find("label").append(String(val));
+                }
+    
+                // preset value
+                if (options.preset) {
+                    if (typeof options.preset == "number" && options.preset == i) {
+                        $field.find('input').prop('checked', true);
+                    } else if (options.preset === true) {
+                        $field.find('input').prop('checked', true);
+                    }
+                }
+        
+                // events
+                $field.find("input").on("change", function() {
+                    $field.trigger("field-updated");
+                });
+        
+                // Add to element
+                $parent.append($field);
             }
-    
-            // events
-            $field.find("input").on("change", function() {
-                $field.trigger("field-updated");
-            });
-    
-            // Add to element
-            $parent.append($field);
         },
         dropdown: function($parent, options) {  // TODO: Tweak position
             var $field = fn.createDropdown();

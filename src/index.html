@@ -31,18 +31,18 @@
                     label: 'A Number',
                 });
                 // Checkbox
-                $('#mycheckbox').find(".checker").jfield('checkbox', {
-                    value: '1',
+                $('#mycheckbox').jfield('checkbox', {
+                    value: ['1','2','3'],
                     attrs: {name: "checkableitem"},
-                    preset: true,
-                    label: 'A Checkbox',
+                    preset: 1,
+                    label: ['A Checkbox','Another','Final Checkbox'],
                 });
                 // Radio
-                $('#myradio .myradio').jfield('radio', {
-                    value: '1',
-                    attrs: {name: "whichoption", id: "_radio"},
+                $('#myradio').jfield('radio', {
+                    value: ['1','2','3'],
+                    attrs: {name: "whichoption"},
                     preset: true,
-                    label: 'Radio Option',
+                    label: ['Radio Option 1','Radio Option 2','Radio Option 3'],
                 });
                 // Dropdown
                 $('#mydrop').jfield('dropdown', {
@@ -90,19 +90,12 @@
 
             <p>Checkbox</p>
             <div>
-                <div id="mycheckbox">
-					<div class="checker"></div>
-					<div class="checker"></div>
-					<div class="checker"></div>
-				</div>
+                <div id="mycheckbox"></div>
             </div>
 
             <p>Radio</p>
             <div>
-                <div id="myradio">
-                    <div class="myradio"></div>
-                    <div class="myradio"></div>
-                </div>
+                <div id="myradio"></div>
             </div>
 
             <p>Dropdown</p>
