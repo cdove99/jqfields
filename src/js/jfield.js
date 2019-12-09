@@ -183,7 +183,7 @@ var jFieldDefaults = {
             var $field = fn.createText();
             // attr
             setattr($field.find("input"), options.attrs);
-            $field.find("input").addClass("text");
+            $field.find("input").addClass(jFieldDefaults.text.attr.class);
     
             // label
             if (options.label) {
