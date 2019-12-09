@@ -47,8 +47,12 @@ var jFieldDefaults = {
     },
     radio: {
         attr: {
-            class: 'jradio',
-            checked: false,
+            wrapper: {
+                class: 'jradio',
+            }, 
+            input: {
+                checked: false,
+            }
         },
         content: '',
     },
@@ -106,7 +110,8 @@ var jFieldDefaults = {
             var $container = fn._container(),
             $radio = $("<label><input type=\"radio\"><span></span></label>");
     
-            $radio.attr(jFieldDefaults.radio.attr);
+            $radio.attr(jFieldDefaults.radio.attr.wrapper);
+            $radio.find("input").attr(jFieldDefaults.radio.attr.input);
             return $container.append($radio);
         },
         createDropdown: function() {  // Dropdown element
@@ -282,18 +287,6 @@ var jFieldDefaults = {
             var values = options.value;
             var labels = options.label;
 
-            if (Array.isArray(values)) {
-                for (var i=0; i<values.length; i++) {
-                    if (Array.isArray(labels)) {
-                        builder(values[i], labels[i], i);
-                    } else {
-                        builder(values[i], labels, i);
-                    }
-                }
-            } else {
-                builder(values, labels, 0);
-            }
-
             function builder(val, lbl, i) {
                 var $field = fn.createRadio();
                 // Set our value for this check
@@ -324,6 +317,18 @@ var jFieldDefaults = {
         
                 // Add to element
                 $parent.append($field);
+            }
+
+            if (Array.isArray(values)) {
+                for (var i=0; i<values.length; i++) {
+                    if (Array.isArray(labels)) {
+                        builder(values[i], labels[i], i);
+                    } else {
+                        builder(values[i], labels, i);
+                    }
+                }
+            } else {
+                builder(values, labels, 0);
             }
         },
         dropdown: function($parent, options) {  // TODO: Tweak position
