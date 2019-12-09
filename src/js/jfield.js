@@ -330,7 +330,7 @@ var jFieldDefaults = {
             var $field = fn.createDropdown();
             // custom attr
             setattr($field.find("input"), options.attrs);
-            $field.find("input").addClass("dropdown");
+            $field.find("input").addClass(jFieldDefaults.dropdown.attr.class);
 
             // label
             if (options.label) {
