@@ -15,60 +15,73 @@
 
         <script type="text/javascript">
             $(function() {
-                $('form').on("submit", function() {
-                    return false;
-                });
-                // Textbox
-                $('#mytextbox').jfield('text', {
-                    attrs: {name: "thetextbox", id: "_text"},
-                    preset: "Sample Text",
-                    label: 'A Text Box',
-                });
-                // Number
-                $('#mynumber').jfield('number', {
-                    attrs: {name: "mynumber", id: "_number"},
-                    preset: 10,
-                    label: 'A Number',
-                });
-                // Checkbox
-                $('#mycheckbox').jfield('checkbox', {
-                    value: ['1','2','3'],
-                    attrs: {name: "checkableitem"},
-                    preset: 1,
-                    label: ['A Checkbox','Another','Final Checkbox'],
-                });
-                // Radio
-                $('#myradio').jfield('radio', {
-                    value: ['1','2','3'],
-                    attrs: {name: "whichoption"},
-                    preset: true,
-                    label: ['Radio Option 1','Radio Option 2','Radio Option 3'],
-                });
-                // Dropdown
-                $('#mydrop').jfield('dropdown', {
-                    value: ['1','2','3','4'],
-                    attrs: {name: "selectionbox", id: "_dropdown"},
-                    preset: '1',
-                    label: 'A Dropdown',
-                });
-                // Button
-                $('#mybutton').jfield('button', {
-                    value: 'Button',
-                    attrs: {name: "thisisabutton", id: "_button"},
-                    label: 'This is a button',
-                });
-                
-                // Listener - listening to all jfield
-                $(".jfield").on("field-updated", function(evt) {
-                    // Getting values
-                    var x = $('form').jfield("getValue");
-                    console.log("Updated a field:", x);
-                });
+                function setup() {
+                    $('form').on("submit", function() {
+                        return false;
+                    });
+                    // Textbox
+                    $('#mytextbox').jfield('text', {
+                        attrs: {name: "thetextbox", id: "_text"},
+                        preset: "Sample Text",
+                        label: 'A Text Box',
+                    });
+                    // Number
+                    $('#mynumber').jfield('number', {
+                        attrs: {name: "mynumber", id: "_number"},
+                        preset: 10,
+                        label: 'A Number',
+                    });
+                    // Checkbox
+                    $('#mycheckbox').jfield('checkbox', {
+                        value: ['1','2','3'],
+                        attrs: {name: "checkableitem"},
+                        preset: 1,
+                        label: ['A Checkbox','Another','Final Checkbox'],
+                    });
+                    // Radio
+                    $('#myradio').jfield('radio', {
+                        value: ['1','2','3'],
+                        attrs: {name: "whichoption"},
+                        preset: true,
+                        label: ['Radio Option 1','Radio Option 2','Radio Option 3'],
+                    });
+                    // Dropdown
+                    $('#mydrop').jfield('dropdown', {
+                        value: ['1','2','3','4'],
+                        attrs: {name: "selectionbox", id: "_dropdown"},
+                        preset: '1',
+                        label: 'A Dropdown',
+                    });
+                    // Button
+                    $('#mybutton').jfield('button', {
+                        value: 'Button',
+                        attrs: {name: "thisisabutton", id: "_button"},
+                        label: 'This is a button',
+                    });
+                    
+                    // Listener - listening to all jfield
+                    $(".jfield").on("field-updated", function(evt) {
+                        // Getting values
+                        var x = $('form').jfield("getValue");
+                        console.log("Updated a field:", x);
+                    });
+    
+                    // Setting values
+                    $('#setthisfield').on("click", function() {
+                        $('#mytextbox').jfield("setValue", "22 Apples");
+                        $('#mynumber').jfield("setValue", 123);
+                    });
+                }
 
-                // Setting values
-                $('#setthisfield').on("click", function() {
-                    $('#mytextbox').jfield("setValue", "22 Apples");
-                    $('#mynumber').jfield("setValue", 123);
+
+                $('#setup').on("click", function() { setup(); });
+                $('#destroy').on('click', function() {
+                    $('#mytextbox').jfield('destroy');
+                    $('#mynumber').jfield('destroy');
+                    $('#mycheckbox').jfield('destroy');
+                    $('#myradio').jfield('destroy');
+                    $('#mydrop').jfield('destroy');
+                    $('#mybutton').jfield('destroy');
                 });
             });
         </script>
@@ -77,6 +90,9 @@
     <body>
         <form>
             <h1>JQuery field plugin.</h1>
+
+            <button id="setup">Setup</button>
+            <button id="destroy">Destroy</button>
             
             <p>Textbox</p>
             <div>

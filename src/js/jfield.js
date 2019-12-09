@@ -449,6 +449,14 @@ var jFieldDefaults = {
         });
         return j;
     };
+    // destroy
+    function destroy($parent) {
+        // Clear it out. Unset field-updated event.
+        if ($parent.find("> .jfield").length > 0) {
+            $parent.empty();
+            $parent.off('field-updated');
+        }
+    };
     // plugin
     $.fn.jfield = function(action, options) {
         switch (action) {
@@ -477,6 +485,9 @@ var jFieldDefaults = {
                             break;
                         case "button":  // Create button
                             setup.button($(this), options);
+                            break;
+                        case "destroy":
+                            destroy($(this));
                             break;
                         default: 
                             console.warn("Unrecognised action: " + action);
