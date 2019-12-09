@@ -302,7 +302,7 @@ var jFieldDefaults = {
                 }
     
                 // preset value
-                if (options.preset) {
+                if ("preset" in options) {
                     if (typeof options.preset == "number" && options.preset == i) {
                         $field.find('input').prop('checked', true);
                     } else if (options.preset === true) {
