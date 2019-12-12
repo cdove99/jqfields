@@ -430,6 +430,7 @@ var jFieldDefaults = {
          * Return an object of values for all the
          * jfields in the selector.
          */
+        if (!options) options = {};
         var j = {};
         $elem.find(".jfield").each(function(i, el) {
             var $input = $(this).find("input");
