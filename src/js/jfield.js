@@ -425,7 +425,7 @@ var jFieldDefaults = {
             }
         });
     };
-    function getValue($elem, getButtons) {
+    function getValue($elem, options) {
         /**
          * Return an object of values for all the
          * jfields in the selector.
@@ -438,7 +438,15 @@ var jFieldDefaults = {
 
             if (inputtype == "button") {
                 // Buttons are requested
-                if (!!getButtons) j[inputname] = $input.val();
+                if (!!options.getButtons) {
+                    if (!!options.overwrite) {
+                        j[inputname] = $input.val();
+                    } else {
+                        if (!Array.isArray(j[inputname])) 
+                            j[inputname] = [];
+                        j[inputname].push($input.val());
+                    }
+                }
             } else if (inputtype == "radio") {  
                 if ($input.is(":checked")) {
                     j[inputname] = $input.val();
@@ -449,7 +457,13 @@ var jFieldDefaults = {
                 if ($input.is(":checked"))
                     j[inputname].push($input.val());
             } else {
-                j[inputname] = $input.val();
+                if (!!options.overwrite) {
+                    j[inputname] = $input.val();
+                } else {
+                    if (!Array.isArray(j[inputname])) 
+                        j[inputname] = [];
+                    j[inputname].push($input.val());
+                }
             }
         });
         return j;

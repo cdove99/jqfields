@@ -58,11 +58,19 @@
                         attrs: {name: "thisisabutton", id: "_button"},
                         label: 'This is a button',
                     });
+                    $('#anotherbutton').jfield('button', {
+                        value: 'Another Button',
+                        attrs: {name: "thisisabutton", id: "_button2"},
+                        label: 'This is another button',
+                    });
                     
                     // Listener - listening to all jfield
                     $(".jfield").on("field-updated", function(evt) {
                         // Getting values
-                        var x = $('form').jfield("getValue");
+                        var x = $('form').jfield("getValue", {
+                            getButtons: true,
+                            overwrite: false,
+                        });
                         console.log("Updated a field:", x);
                     });
     
@@ -122,6 +130,11 @@
             <p>Button</p>
             <div>
                 <div id="mybutton"></div>
+            </div>
+
+            <p>Button Again</p>
+            <div>
+                <div id="anotherbutton"></div>
             </div>
 
             <div>
