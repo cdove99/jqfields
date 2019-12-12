@@ -46,7 +46,7 @@ Instead of jumping around grabbing specific elements by ids or having to monitor
 Values that can be applied to the options include:
 
 - `getButtons`: So you can get your button values. _default: false_  
-- `overwrite`: If there are multiple fields (excluding radio/checkbox) which have the same names, `true` will collect only the last available value, while `false` will collect all values as an Array. Single values are still returned in an Array. _default: false_  
+- `overwrite`: If there are multiple fields (excluding radio/checkbox) which have the same names, `true` will collect only the last available value, while `false` will collect all values as an Array. Single values are still returned in an Array. _default: true_  
 
 ```javascript
 // Any selected element
