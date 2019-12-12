@@ -52,6 +52,12 @@
                         preset: '1',
                         label: 'A Dropdown',
                     });
+                    $('#yourdrop').jfield('dropdown', {
+                        value: function() { return ['1', '3', '5']; },
+                        attrs: {name: "fndropdown", id: "_fndrop"},
+                        preset: '1',
+                        label: 'A Dropdown',
+                    });
                     // Button
                     $('#mybutton').jfield('button', {
                         value: 'Button',
@@ -125,6 +131,11 @@
             <p>Dropdown</p>
             <div>
                 <div id="mydrop"></div>
+            </div>
+
+            <p>Dropdown Function Filled</p>
+            <div>
+                <div id="yourdrop"></div>
             </div>
 
             <p>Button</p>

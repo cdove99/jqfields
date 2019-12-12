@@ -1,29 +1,5 @@
 /**
  * Using jQuery to do some field stuff.
- * 
- * jField interactions:
- * `action == 'text'|'number'|'checkbox'|'radio'|'dropdown'|'button'`
- *  Create a new field within this element.
- *  In this context, `options` should contain: 
- *      `value` key, relevant to the values the field should have set. 
- *      (Usually string, although the dropdown requires an array. Text/Number fields ignore this)
- *      `attrs` key, relevant to attributes that can be applied to an input.
- *      (Inc. id, name, etc. Type & Value will be removed.)
- *      `preset` key, to set the field to a specified value on creation. 
- *      (True/False for checkbox/radio, string to prefill others)
- *      `label` key, to determine if a label is displayed. 
- *      (Either false for no label, or string label to display)
- * 
- * `action == 'getValue'`
- *  Get a value from one or more jfield elements in the parent.
- *  Returned as array of objects.
- * 
- * `action == 'setValue'`
- *  Set a value for one or more jfield elements in the parent.
- *  If a value cannot be set to, or doesn't match an available input,
- *  it will be ignored.
- *  `options` should be the value.
- * 
  */
 var jFieldDefaults = {
     text: {
@@ -130,6 +106,7 @@ var jFieldDefaults = {
         },
         // Events
         openDrop: function($input, values) {
+            if (typeof values === "function") values = values();
             if (!Array.isArray(values)) return;
 
             var cls = jFieldDefaults.dropdown.menu.attr.class;
@@ -237,6 +214,7 @@ var jFieldDefaults = {
         },
         checkbox: function($parent, options) {
             var values = options.value;
+            if (typeof values === "function") values = values();
             var labels = options.label;
 
             if (Array.isArray(values)) {
@@ -285,6 +263,7 @@ var jFieldDefaults = {
         },
         radio: function($parent, options) {
             var values = options.value;
+            if (typeof values === "function") values = values();
             var labels = options.label;
 
             function builder(val, lbl, i) {
@@ -346,10 +325,8 @@ var jFieldDefaults = {
                 $field.append($label);
             }
             // preset value
-            if (options.preset) {
-                if (options.value.indexOf(options.preset) > -1)
-                    $field.find("input").val(options.preset);
-            }
+            if (options.preset)
+                $field.find("input").val(options.preset);
 
             // Custom clicks and menu
             $field.find("input").on("click", function() {
@@ -367,7 +344,9 @@ var jFieldDefaults = {
         button: function($parent, options) {
             var $field = fn.createButton();
             // Set our value for this check
-            $field.find("input").val(options.value);
+            var value = options.value;
+            if (typeof options.value === "function") value = value();
+            $field.find("input").val(value);
 
             // Custom attr
             setattr($field.find("input"), options.attrs);
