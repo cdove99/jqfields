@@ -173,8 +173,11 @@ var jFieldDefaults = {
             // preset
             if (options.preset) {
                 // enforces String on option
-                // WARNING: this will cast objects to string without care
-                $field.find("input").val(String(options.preset));
+                // WARNING: this will cast objects/arrays to string without care
+                if (typeof options.preset === "function") 
+                    options.preset(0, $field);
+                else 
+                    $field.find("input").val(String(options.preset));
             }
 
             $field.find("input").on("change", function() {
@@ -201,7 +204,9 @@ var jFieldDefaults = {
             // preset
             if (options.preset) {
                 // enforces Number, ignoring NaN values for preset
-                if (!isNaN(Number(options.preset)))
+                if (typeof options.preset === "function")
+                    options.preset(0, $field);
+                else if (!isNaN(Number(options.preset)))
                     $field.find("input").val(Number(options.preset));
             }
 
@@ -216,18 +221,6 @@ var jFieldDefaults = {
             var values = options.value;
             if (typeof values === "function") values = values();
             var labels = options.label;
-
-            if (Array.isArray(values)) {
-                for (var i=0; i<values.length; i++) {
-                    if (Array.isArray(labels)) {
-                        builder(values[i], labels[i]);
-                    } else {
-                        builder(values[i], labels);
-                    }
-                }
-            } else {
-                builder(values, labels);
-            }
 
             function builder(val, lbl) {
                 var $field = fn.createCheckbox();
@@ -249,6 +242,8 @@ var jFieldDefaults = {
                         $field.find('input').prop('checked', true);
                     } else if (options.preset === true) {
                         $field.find('input').prop('checked', true);
+                    } else if (typeof options.preset === "function") {
+                        options.preset(i, $field);
                     }
                 }
         
@@ -259,6 +254,18 @@ var jFieldDefaults = {
         
                 // Add to element
                 $parent.append($field);
+            }
+
+            if (Array.isArray(values)) {
+                for (var i=0; i<values.length; i++) {
+                    if (Array.isArray(labels)) {
+                        builder(values[i], labels[i]);
+                    } else {
+                        builder(values[i], labels);
+                    }
+                }
+            } else {
+                builder(values, labels);
             }
         },
         radio: function($parent, options) {
@@ -286,6 +293,8 @@ var jFieldDefaults = {
                         $field.find('input').prop('checked', true);
                     } else if (options.preset === true) {
                         $field.find('input').prop('checked', true);
+                    } else if (typeof options.preset === "function") {
+                        options.preset(i, $field);
                     }
                 }
         
@@ -325,8 +334,13 @@ var jFieldDefaults = {
                 $field.append($label);
             }
             // preset value
-            if (options.preset)
-                $field.find("input").val(options.preset);
+            // WARNING: this will cast objects/arrays to string without care
+            if (options.preset) {
+                if (typeof options.preset === "function")
+                    options.preset(0, $field);
+                else 
+                    $field.find("input").val(options.preset.toString());
+            }
 
             // Custom clicks and menu
             $field.find("input").on("click", function() {
