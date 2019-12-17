@@ -4,6 +4,8 @@
 .jfield, .jtext, .jnumber, .jradio, .jcheckbox, .jdropdown, .jbutton { position: relative; }
 .jtext, .jnumber, .jradio span, .jcheckbox span, .jdropdown, .jbutton { margin-right: 5px; }
 .jfield span:before { font-family: "Font Awesome 5 Free"; }
+/* Label */
+.jfield label { padding: 0 3px; }
 /* Text */
 .jtext { padding: 2px 5px; width: 100px; }
 /* Number */
@@ -22,7 +24,6 @@
 .jdropdown-menu ul { list-style: none; padding: 3px; margin: 0; }
 /* Button */
 .jbutton { cursor: pointer; }
-
 /* Default states */
 .jcheckbox input ~ span:before, .jradio input ~ span:before { color: #FFFFFF; }
 .jcheckbox input:checked ~ span:before, .jradio input:checked ~ span:before { color: #000000; }

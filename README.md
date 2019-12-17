@@ -69,5 +69,4 @@ $('.text-field').jfield('getValue', {overwrite: false});
 ## Thoughts for additions
 
 - Fieldset element generation?  
-- Label text positioning, before or after?  
 - Custom classes for elements.  

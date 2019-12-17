@@ -168,7 +168,7 @@ var jFieldDefaults = {
                 // label linking to input
                 if ($field.find("input").attr('id'))
                     $label.attr({for: $field.find("input").attr('id')});
-                $field.append($label);
+                $field.prepend($label);
             }
             // preset
             if (options.preset) {
@@ -191,7 +191,7 @@ var jFieldDefaults = {
             var $field = fn.createNumber();
             // attr
             setattr($field.find("input"), options.attrs);
-            $field.find("input").addClass("number");
+            $field.find("input").addClass(jFieldDefaults.number.attr.class);
     
             // label
             if (options.label) {
@@ -199,7 +199,7 @@ var jFieldDefaults = {
                 // label linking to input
                 if ($field.find("input").attr('id'))
                     $label.attr({for: $field.find("input").attr('id')});
-                $field.append($label);
+                $field.prepend($label);
             }
             // preset
             if (options.preset) {
@@ -225,7 +225,8 @@ var jFieldDefaults = {
             function builder(val, lbl) {
                 var $field = fn.createCheckbox();
                 // Set our value for this check
-                $field.find("input").val(val);
+                $field.find("input").val(val)
+                .addClass(jFieldDefaults.checkbox.attr.class);
         
                 // custom attr
                 setattr($field.find('input'), options.attrs);
@@ -276,7 +277,8 @@ var jFieldDefaults = {
             function builder(val, lbl, i) {
                 var $field = fn.createRadio();
                 // Set our value for this check
-                $field.find("input").val(val);
+                $field.find("input").val(val)
+                .addClass(jFieldDefaults.radio.attr.class);
         
                 // custom attr
                 setattr($field.find('input'), options.attrs);
@@ -331,7 +333,7 @@ var jFieldDefaults = {
                 // label linking to input
                 if ($field.find("input").attr('id'))
                     $label.attr({for: $field.find("input").attr('id')});
-                $field.append($label);
+                $field.prepend($label);
             }
             // preset value
             // WARNING: this will cast objects/arrays to string without care
@@ -364,7 +366,7 @@ var jFieldDefaults = {
 
             // Custom attr
             setattr($field.find("input"), options.attrs);
-            $field.find("input").addClass("button");
+            $field.find("input").addClass(jFieldDefaults.button.attr.class);
 
             // label
             if (options.label) {
@@ -372,7 +374,7 @@ var jFieldDefaults = {
                 // label linking to input
                 if ($field.find("input").attr('id'))
                     $label.attr({for: $field.find("input").attr('id')});
-                $field.append($label);
+                $field.prepend($label);
             }
 
             // events
