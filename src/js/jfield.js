@@ -171,7 +171,7 @@ var jFieldDefaults = {
                 $field.prepend($label);
             }
             // preset
-            if (options.preset) {
+            if ("preset" in options) {
                 // enforces String on option
                 // WARNING: this will cast objects/arrays to string without care
                 if (typeof options.preset === "function") 
@@ -202,7 +202,7 @@ var jFieldDefaults = {
                 $field.prepend($label);
             }
             // preset
-            if (options.preset) {
+            if ("preset" in options) {
                 // enforces Number, ignoring NaN values for preset
                 if (typeof options.preset === "function")
                     options.preset(0, $field);
@@ -225,8 +225,7 @@ var jFieldDefaults = {
             function builder(val, lbl) {
                 var $field = fn.createCheckbox();
                 // Set our value for this check
-                $field.find("input").val(val)
-                .addClass(jFieldDefaults.checkbox.attr.class);
+                $field.find("input").val(val);
         
                 // custom attr
                 setattr($field.find('input'), options.attrs);
@@ -238,7 +237,7 @@ var jFieldDefaults = {
                 }
     
                 // preset value
-                if (options.preset) {
+                if ("preset" in options) {
                     if (typeof options.preset == "number" && options.preset == i) {
                         $field.find('input').prop('checked', true);
                     } else if (options.preset === true) {
@@ -277,8 +276,7 @@ var jFieldDefaults = {
             function builder(val, lbl, i) {
                 var $field = fn.createRadio();
                 // Set our value for this check
-                $field.find("input").val(val)
-                .addClass(jFieldDefaults.radio.attr.class);
+                $field.find("input").val(val);
         
                 // custom attr
                 setattr($field.find('input'), options.attrs);
@@ -337,7 +335,7 @@ var jFieldDefaults = {
             }
             // preset value
             // WARNING: this will cast objects/arrays to string without care
-            if (options.preset) {
+            if ("preset" in options) {
                 if (typeof options.preset === "function")
                     options.preset(0, $field);
                 else 
