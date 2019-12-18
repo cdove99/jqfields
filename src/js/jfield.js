@@ -40,7 +40,8 @@ var jFieldDefaults = {
         menu: {
             attr: {
                 class: 'jdropdown-menu',
-            }
+            },
+            offset: 5,
         }
     },
     button: {
@@ -121,8 +122,8 @@ var jFieldDefaults = {
                 $menu.attr(jFieldDefaults.dropdown.menu.attr)
                     .css({
                         'position': 'absolute', 
-                        'top': $input.outerHeight() + 2,
-                        'width': $input.innerWidth(),
+                        'top': $input.outerHeight() + jFieldDefaults.dropdown.menu.offset,
+                        'width': $input.outerWidth(),
                         'z-index': 100,
                     }).append("<ul></ul>");
 
