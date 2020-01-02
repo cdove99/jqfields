@@ -74,4 +74,4 @@ $('.text-field').jfield('getValue', {overwrite: false});
 
 ## Known Issues / Bugs  
 
-- One known issue is that when presetting a dropdown, it simply sets whatever as the value and data of the parent input, so the value may end up being the same as the data initially, which could be a problem when using a `label` Array to substitute the displayed value. A workaround for this is to use a callback function and set the value and data for the given input param as the values you want.  
+- One known issue is that when presetting a dropdown, it simply sets whatever as the value and data of the parent input, so the value may end up being the same as the data initially, which could be a problem when using a `label` Array to substitute the displayed value. A workaround for this is to use a callback function and set the value and data for the given field param as the values you want.  
