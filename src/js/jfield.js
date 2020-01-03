@@ -346,17 +346,7 @@ var jFieldDefaults = {
                     $label.attr({for: $field.find("input").attr('id')});
                 $field.prepend($label);
             }
-            // preset value
-            // WARNING: this will cast objects/arrays to string without care
-            if ("preset" in options) {
-                if (typeof options.preset === "function")
-                    options.preset(0, $field);
-                else {
-                    var v = options.preset.toString();
-                    $field.find("select").val(v);
-                }
-            }
-
+            
             // values in select
             if (typeof options.value === "function") values = options.value();
             else values = options.value;
@@ -380,6 +370,17 @@ var jFieldDefaults = {
                 }
             }
             addVals($field, values, options.label);
+
+            // preset value
+            // WARNING: this will cast objects/arrays to string without care
+            if ("preset" in options) {
+                if (typeof options.preset === "function")
+                    options.preset(0, $field);
+                else {
+                    var v = options.preset.toString();
+                    $field.find("select").val(v);
+                }
+            }
 
             // Custom clicks and menu
             $field.find("select").on("mousedown", function(evt) {
