@@ -9,7 +9,7 @@ Requires:
 
 Comes with:  
 
-- Basic CSS, copy certain rules to add your own styles!  
+- Basic CSS, copy certain rules to add your own styles! (Make sure to be careful with radio buttons/checkboxes)  
 - jQuery plugin script.  
 
 ## Examples
@@ -66,6 +66,11 @@ $('.text-field').jfield('getValue', {overwrite: false});
 // {textName: [textValue, ..., textValueN]}
 ```
 
+## Notes  
+
+- The inputs that are generated are usually just standard HTML inputs, with extra functionality slapped on them, and some styling.  
+- The dropdown is a standard HTML select element, complete with options, which should be usable if JS fails.  
+
 ## Thoughts for additions
 
 - Fieldset element generation?  
@@ -75,3 +80,4 @@ $('.text-field').jfield('getValue', {overwrite: false});
 ## Known Issues / Bugs  
 
 - One known issue is that when presetting a dropdown, it simply sets whatever as the value and data of the parent input, so the value may end up being the same as the data initially, which could be a problem when using a `label` Array to substitute the displayed value. A workaround for this is to use a callback function and set the value and data for the given field param as the values you want.  
+- Dropdowns with a label for the input seem to have a weird issue where the menu opens under the label, since it seems to assume the select element is positioned there, and nothing currently checks for left positioning.  
