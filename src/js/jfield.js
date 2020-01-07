@@ -443,6 +443,7 @@ var jFieldDefaults = {
         // Setting values
         $elem.find(".jfield").each(function() {
             var ftype = $(this).find("input").attr("type");
+            var isdrop = $(this).find("select").length > 0;
             
             if (ftype === "checkbox" || ftype === "radio") {
                 // Set on radio/check means select it.
@@ -450,12 +451,15 @@ var jFieldDefaults = {
                 if ((!!value && !checked) || (!value && checked))
                     $(this).find("input").trigger("click");
             } else if (ftype === "text" || ftype === "number") {
-                // Set on text/number means insert value. (Dropdown gets hard set)
+                // Set on text/number means insert value.
                 if (ftype === "number" && isNaN(Number(value))) return;
                 $(this).find("input").val(value);
             } else if (ftype === "button") {
                 // Set on button triggers a click.
                 $(this).find("input").trigger("click");
+            } else if (isdrop) {
+                // select type just has `.val()` used.
+                $(this).find("select").val(value);
             }
         });
     };
