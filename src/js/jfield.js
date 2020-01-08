@@ -119,12 +119,7 @@ var jFieldDefaults = {
 
             if (!hasmenu) {
                 $menu.attr(jFieldDefaults.dropdown.menu.attr)
-                .css({
-                    'position': 'absolute', 
-                    'top': $select.outerHeight() + jFieldDefaults.dropdown.menu.offset,
-                    'width': $select.outerWidth(),
-                    'z-index': 100,
-                }).append("<ul></ul>");
+                .append("<ul></ul>");
 
                 // Add values
                 for (var i=0; i<values.length; i++) {
@@ -143,7 +138,7 @@ var jFieldDefaults = {
                         $menu.find("ul").append($li);
                     }
                 }
-
+                
                 // events
                 $menu.find("li").on("click", function() {
                     var data = $(this).data('value');
@@ -155,6 +150,15 @@ var jFieldDefaults = {
             } else {
                 $menu.show();
             }
+
+            // Check positioning
+            $menu.css({
+                'position': 'absolute', 
+                'top': $select.outerHeight() + jFieldDefaults.dropdown.menu.offset,
+                'left': $select.position().left,
+                'width': $select.outerWidth(),
+                'z-index': 100,
+            });
 
             // body once to close
             var bodyClick = function(evt) {
