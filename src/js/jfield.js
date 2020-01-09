@@ -152,13 +152,25 @@ var jFieldDefaults = {
             }
 
             // Check positioning
-            $menu.css({
+            var selectHeight = $select.outerHeight();
+            var menuHeight = $menu.outerHeight();
+            var menuOffset = jFieldDefaults.dropdown.menu.offset;
+            var selectBottom = $select.offset().top + selectHeight;
+            var styles = {
                 'position': 'absolute', 
-                'top': $select.outerHeight() + jFieldDefaults.dropdown.menu.offset,
+                'top': selectHeight + menuOffset,
                 'left': $select.position().left,
                 'width': $select.outerWidth(),
                 'z-index': 100,
-            });
+            };
+            $menu.css(styles);
+            // Flip if offscreen
+            var _viewBottom = $(window).scrollTop() + $(window).height();
+            var _bottom = selectBottom + menuHeight + menuOffset;
+            if (_bottom > _viewBottom) {  // off screen, flip
+                var _top = $menu.position().top - (menuHeight + selectHeight + (menuOffset * 2));
+                $menu.css({"top": _top});
+            }
 
             // body once to close
             var bodyClick = function(evt) {
@@ -166,8 +178,9 @@ var jFieldDefaults = {
                 if (!$(evt.target).hasClass(cls))
                     $menu.hide();
             };
-            $("body").off("click", bodyClick);
-            $("body").on("click", bodyClick);
+            var hide = function(evt) { $menu.hide(); };
+            $("body").off("click", bodyClick).on("click", bodyClick);
+            $(window).off("scroll resize", hide).on("scroll resize", hide);
         },
     },
     setup = {
