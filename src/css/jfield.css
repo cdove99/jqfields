@@ -1,13 +1,13 @@
 /* -- Basic Structure -- */
 /* Container */
 .jfield { padding: 5px; }
-.jfield, .jtext, .jnumber, .jradio, .jcheckbox, .jdropdown, .jbutton { position: relative; }
-.jtext, .jnumber, .jradio span, .jcheckbox span, .jdropdown, .jbutton { margin-right: 5px; }
+.jfield, .jtext, .jpassword, .jnumber, .jradio, .jcheckbox, .jdropdown, .jbutton { position: relative; }
+.jtext, .jpassword, .jnumber, .jradio span, .jcheckbox span, .jdropdown, .jbutton { margin-right: 5px; }
 .jfield span:before { font-family: "Font Awesome 5 Free"; }
 /* Label */
 .jfield label { padding: 0 3px; }
-/* Text */
-.jtext { padding: 2px 5px; width: 100px; }
+/* Text/Password */
+.jtext, .jpassword { padding: 2px 5px; width: 100px; }
 /* Number */
 .jnumber { padding: 2px 5px; width: 50px; }
 /* Radio */
