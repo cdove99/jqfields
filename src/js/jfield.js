@@ -72,7 +72,7 @@ var jFieldDefaults = {
             $text.css(jFieldDefaults.text.attr);
             return $container.append($text);
         },
-        createText: function() {  // Password element
+        createPassword: function() {  // Password element
             var $container = fn._container(),
             $pass = $("<input type=\"password\">");
     
