@@ -119,21 +119,58 @@ var jFieldDefaults = {
             return $container.append($button);
         },
         // Events
-        openDrop: function($select, values, labels) {
+        openDrop: function($field, options) {
+            // Moved select item addition here to allow 
+            // for dynamic select updating through functions
+            if (typeof options.label === 'function') {
+                labels = options.label();
+            } else {
+                labels = options.label;
+            }
+            if (typeof options.value === "function") {
+                var values = options.value();
+                var currentVal = $field.find("select").val() || values[0];
+
+                function addVals($field, values, labels) {
+                    if (Array.isArray(values)) {
+                        $field.find("select").empty();
+    
+                        for (var i=0; i<values.length; i++) {
+                            var $option = $("<option></option>");
+                            var val = values[i].toString();
+                            var lbl;
+        
+                            if (Array.isArray(labels)) {
+                                lbl = labels[i];
+                                $option.val(val).text(lbl);
+                            } else {
+                                $option.val(val).text(val);
+                            }
+        
+                            $field.find("select").append($option);
+                        }
+
+                        $field.find("select").val(currentVal);
+                    }
+                }
+                addVals($field, values, labels);
+            } else {
+                var values = options.value;
+            }
+
             if (!Array.isArray(values)) return;  // Must be Array here
 
             var cls = jFieldDefaults.dropdown.menu.attr.class;
-            var hasmenu = ($select.parent().find('.'+cls).length > 0);
+            var hasmenu = ($field.find('.'+cls).length > 0);
 
-            if (hasmenu)
-                $menu = $select.parent().find('.'+cls);
-            else
+            if (hasmenu) {
+                $menu = $field.find('.'+cls);
+            } else {
                 $menu = $("<div></div>");
+            }
 
-            if (!hasmenu) {
-                $menu.attr(jFieldDefaults.dropdown.menu.attr)
-                .append("<ul></ul>");
-
+            // Build select items
+            function setItems($menu, values, labels) {
                 // Add values
                 for (var i=0; i<values.length; i++) {
                     var value = String(values[i]);
@@ -151,29 +188,37 @@ var jFieldDefaults = {
                         $menu.find("ul").append($li);
                     }
                 }
-                
                 // events
                 $menu.find("li").on("click", function() {
                     var data = $(this).data('value');
-                    $select.val(data);
-                    $select.trigger("change");
+                    $field.find("select").val(data);
+                    $field.find("select").trigger("change");
                 });
+            }
 
-                $select.parent().append($menu);
+            if (!hasmenu) {
+                $menu.attr(jFieldDefaults.dropdown.menu.attr)
+                .append("<ul></ul>");
+
+                setItems($menu, values, labels);
+
+                $field.append($menu);
             } else {
+                $menu.find("ul").empty();
+                setItems($menu, values, labels);
                 $menu.show();
             }
 
             // Check positioning
-            var selectHeight = $select.outerHeight();
+            var selectHeight = $field.find("select").outerHeight();
             var menuHeight = $menu.outerHeight();
             var menuOffset = jFieldDefaults.dropdown.menu.offset;
-            var selectBottom = $select.offset().top + selectHeight;
+            var selectBottom = $field.find("select").offset().top + selectHeight;
             var styles = {
                 'position': 'absolute', 
                 'top': selectHeight + menuOffset,
-                'left': $select.position().left,
-                'width': $select.outerWidth(),
+                'left': $field.find("select").position().left,
+                'width': $field.find("select").outerWidth(),
                 'z-index': 100,
             };
             $menu.css(styles);
@@ -394,25 +439,19 @@ var jFieldDefaults = {
         },
         dropdown: function($parent, options) {
             var $field = fn.createDropdown();
-            var values;
             // custom attr
             setattr($field.find("select"), options.attrs);
             $field.find("select").addClass(jFieldDefaults.dropdown.attr.class);
 
             // label
-            if (options.label && !Array.isArray(options.label)) {
-                $label = $("<label>" + options.label + "</label>");
-                // label linking to input
-                if ($field.find("input").attr('id'))
-                    $label.attr({for: $field.find("input").attr('id')});
-                $field.prepend($label);
+            if (typeof options.label === 'function') {
+                labels = options.label();
+            } else {
+                labels = options.label;
             }
             
-            // values in select
-            if (typeof options.value === "function") values = options.value();
-            else values = options.value;
-
             function addVals($field, values, labels) {
+                if (typeof values === "function") values = values();
                 if (Array.isArray(values)) {
                     for (var i=0; i<values.length; i++) {
                         var $option = $("<option></option>");
@@ -420,7 +459,7 @@ var jFieldDefaults = {
                         var lbl;
     
                         if (Array.isArray(labels)) {
-                            lbl = labels[i];
+                            lbl = labels[i] || val;  // Fallback if falsey
                             $option.val(val).text(lbl);
                         } else {
                             $option.val(val).text(val);
@@ -430,7 +469,7 @@ var jFieldDefaults = {
                     }
                 }
             }
-            addVals($field, values, options.label);
+            addVals($field, options.value, labels);
 
             // preset value
             // WARNING: this will cast objects/arrays to string without care
@@ -446,7 +485,7 @@ var jFieldDefaults = {
             // Custom clicks and menu
             $field.find("select").on("mousedown", function(evt) {
                 evt.preventDefault();
-                fn.openDrop($(this), values, options.label);
+                fn.openDrop($field, options);
             });
 
             // events

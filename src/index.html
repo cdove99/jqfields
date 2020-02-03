@@ -15,6 +15,9 @@
 
         <script type="text/javascript">
             $(function() {
+                var myGlobArr = ['1', '3', '5'];
+                var myGlobArrLbl = ['One', 'Three', 'Five'];
+
                 function setup() {
                     $('form').on("submit", function() {
                         return false;
@@ -50,13 +53,12 @@
                         value: ['1','2','3','4'],
                         attrs: {name: "selectionbox", id: "_dropdown"},
                         preset: '1',
-                        label: 'A Dropdown',
                     });
                     $('#yourdrop').jfield('dropdown', {
-                        value: function() { return ['1', '3', '5']; },
+                        value: function() { return myGlobArr; },
                         attrs: {name: "fndropdown", id: "_fndrop"},
-                        preset: 'Five',
-                        label: ['One', 'Three', 'Five'],
+                        preset: '5',
+                        label: function() { return myGlobArrLbl; },
                     });
                     // Button
                     $('#mybutton').jfield('button', {
@@ -108,18 +110,36 @@
                     $('#anotherbutton').jfield('destroy');
                     $('#presetty').jfield('destroy');
                 });
+                $('#update-drop').on("click", function() {
+                    var cycle = [
+                        ['1', '3', '5'],
+                        ['2', '4', '6'],
+                    ];
+                    var lbls = [
+                        ['One', 'Three', 'Five'],
+                        ['Two', 'Four', 'Six'],
+                    ];
 
+                    if (JSON.stringify(myGlobArr) == JSON.stringify(cycle[0])) {
+                        i = 1;
+                    } else {
+                        i = 0;
+                    }
+                    myGlobArr = cycle[i];
+                    myGlobArrLbl = lbls[i];
+                });
             });
         </script>
     </head>
 
     <body>
-        <form>
-            <h1>JQuery field plugin.</h1>
+        <h1>JQuery field plugin.</h1>
 
-            <button id="setup">Setup</button>
-            <button id="destroy">Destroy</button>
-            
+        <button id="setup">Setup</button>
+        <button id="destroy">Destroy</button>
+        <button id="update-drop">Update Dynamic Drop Values</button>
+
+        <form>
             <p>Textbox</p>
             <div>
                 <div id="mytextbox"></div>
