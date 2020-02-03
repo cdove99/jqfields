@@ -555,8 +555,7 @@ var jFieldDefaults = {
                 if (ftype === "number" && isNaN(Number(value))) return;
                 $(this).find("input").val(value);
             } else if (ftype === "button") {
-                // Set on button triggers a click.
-                $(this).find("input").trigger("click");
+                // Set on button does nothing.
             } else if (isdrop) {
                 // select type just has `.val()` used.
                 $(this).find("select").val(value);
