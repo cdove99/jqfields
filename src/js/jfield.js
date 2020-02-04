@@ -193,6 +193,7 @@ var jFieldDefaults = {
                     var data = $(this).data('value');
                     $field.find("select").val(data);
                     $field.find("select").trigger("change");
+                    $menu.hide();
                 });
             }
 
@@ -229,17 +230,12 @@ var jFieldDefaults = {
                 var _top = $menu.position().top - (menuHeight + selectHeight + (menuOffset * 2));
                 $menu.css({"top": _top});
             }
-
-            // body once to close
-            var bodyClick = function(evt) {
-                var cls = jFieldDefaults.dropdown.attr.class;
-                if (!$(evt.target).hasClass(cls))
-                    $menu.hide();
-            };
-            var hide = function(evt) { $menu.hide(); };
-            $("body").off("click", bodyClick).on("click", bodyClick);
-            $(window).off("scroll resize", hide).on("scroll resize", hide);
         },
+        closeDrop: function($field) {
+            var menucls = jFieldDefaults.dropdown.menu.attr.class;
+            var $menu = $field.find('select').next('.'+menucls);
+            $menu.hide();
+        }
     },
     setup = {
         // Elements
@@ -485,7 +481,12 @@ var jFieldDefaults = {
             // Custom clicks and menu
             $field.find("select").on("mousedown", function(evt) {
                 evt.preventDefault();
-                fn.openDrop($field, options);
+                if (evt.which === 1) fn.openDrop($field, options);
+            });
+            $(document).on('click', function(evt) {
+                var cls = jFieldDefaults.dropdown.attr.class;
+                if ($(evt.target).hasClass(cls)) return false;
+                fn.closeDrop($field);
             });
 
             // events
