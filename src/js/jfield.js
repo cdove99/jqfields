@@ -482,13 +482,12 @@ var jFieldDefaults = {
             $field.find("select").on("mousedown", function(evt) {
                 evt.preventDefault();
                 // force all others to close
-                var cls = jFieldDefaults.dropdown.menu.attr.class;
                 fn.closeDrop($(document).find(".jfield"));
                 if (evt.which === 1) fn.openDrop($field, options);
             });
             $(document).on('click', function(evt) {
                 var cls = jFieldDefaults.dropdown.attr.class;
-                if ($(evt.target).hasClass(cls)) return false;
+                if ($(evt.target).hasClass(cls)) return false;  // We want it open on this condition
                 fn.closeDrop($field);
             });
 
