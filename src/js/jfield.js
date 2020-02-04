@@ -481,6 +481,9 @@ var jFieldDefaults = {
             // Custom clicks and menu
             $field.find("select").on("mousedown", function(evt) {
                 evt.preventDefault();
+                // force all others to close
+                var cls = jFieldDefaults.dropdown.menu.attr.class;
+                fn.closeDrop($(document).find(".jfield"));
                 if (evt.which === 1) fn.openDrop($field, options);
             });
             $(document).on('click', function(evt) {
