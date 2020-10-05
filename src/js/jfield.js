@@ -757,8 +757,9 @@ var jFieldDefaults = {
                 return this.each(function(i, el) {
                     switch (action) {
                         case "text":  // Create text field
+                            setup.text($(this), options);
                             break;
-                        case "email":  // Create text field
+                        case "email":  // Create email field
                             setup.email($(this), options);
                             break;
                         case "password":  // Create text field
