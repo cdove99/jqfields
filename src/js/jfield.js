@@ -8,6 +8,12 @@ var jFieldDefaults = {
             placeholder: '',
         },
     },
+    email: {
+        attr: {
+            class: 'jtext',
+            placeholder: '',
+        },
+    },
     password: {
         attr: {
             class: 'jpassword',
@@ -71,6 +77,14 @@ var jFieldDefaults = {
     
             $text.css(jFieldDefaults.text.attr);
             return $container.append($text);
+        },
+        createEmail:function(){
+            var $container = fn._container(),
+            $text = $("<input type=\"email\">");
+    
+            $text.css(jFieldDefaults.text.attr);
+            return $container.append($text);
+
         },
         createPassword: function() {  // Password element
             var $container = fn._container(),
@@ -258,6 +272,37 @@ var jFieldDefaults = {
         // Elements
         text: function($parent, options) {
             var $field = fn.createText();
+            // attr
+            setattr($field.find("input"), options.attrs);
+            $field.find("input").addClass(jFieldDefaults.text.attr.class);
+    
+            // label
+            if (options.label) {
+                $label = $("<label>" + options.label + "</label>");
+                // label linking to input
+                if ($field.find("input").attr('id'))
+                    $label.attr({for: $field.find("input").attr('id')});
+                $field.prepend($label);
+            }
+            // preset
+            if ("preset" in options) {
+                // enforces String on option
+                // WARNING: this will cast objects/arrays to string without care
+                if (typeof options.preset === "function") 
+                    options.preset(0, $field);
+                else 
+                    $field.find("input").val(String(options.preset));
+            }
+
+            $field.find("input").on("change", function() {
+                $field.trigger("field-updated");
+            });
+
+            // Add to element
+            $parent.append($field);
+        },
+        email: function($parent, options) {
+            var $field = fn.createEmail();
             // attr
             setattr($field.find("input"), options.attrs);
             $field.find("input").addClass(jFieldDefaults.text.attr.class);
@@ -581,7 +626,7 @@ var jFieldDefaults = {
                 var checked = $(this).find("input").is(":checked");
                 if ((!!value && !checked) || (!value && checked))
                     $(this).find("input").trigger("click");
-            } else if (ftype === "text" || ftype === "number" || ftype === "password") {
+            } else if (ftype === "text" || ftype === "number" || ftype === "password" || ftype === "email") {
                 // Set on text/number means insert value.
                 if (ftype === "number" && isNaN(Number(value))) return;
                 $(this).find("input").val(value);
@@ -712,7 +757,9 @@ var jFieldDefaults = {
                 return this.each(function(i, el) {
                     switch (action) {
                         case "text":  // Create text field
-                            setup.text($(this), options);
+                            break;
+                        case "email":  // Create text field
+                            setup.email($(this), options);
                             break;
                         case "password":  // Create text field
                             setup.password($(this), options);
