@@ -420,7 +420,10 @@ var jFieldDefaults = {
                         $field.find('input').prop('checked', true);
                     } else if (typeof options.preset === "function") {
                         options.preset(i, $field);
+                    }else if(Array.isArray(options.preset) && options.preset.includes(i)){
+                        $field.find('input').prop('checked', true);
                     }
+
                 }
         
                 // events
